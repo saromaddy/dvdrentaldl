@@ -1,2 +1,2 @@
-# dvdrentaldl
-DVD Rental Postgre SQL with Deep Learning to predict the price
+# DVD Rental - Deep Learning - AWS Hosting
+Predicting Customer Behavior in DVD Rental Using Deep Learning with AWS deployment
