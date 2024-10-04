@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import pickle
 import base64
+from tensorflow.keras.models import load_model
 
 # Function to convert image to base64
 def get_base64_of_bin_file(bin_file):
@@ -37,15 +38,7 @@ st.set_page_config(
 # Inject CSS with markdown
 st.markdown(page_bg_img, unsafe_allow_html=True)
 
-# Load pickled objects
-with open('label_encoders.pkl', 'rb') as file:
-    encoder = pickle.load(file)
-
-with open('scaler1.pkl', 'rb') as file:
-    scaler = pickle.load(file)
-
-with open('carprice.pkl', 'rb') as file:
-    model = pickle.load(file)
+model = load_model('DL_Algo.h5')
 
 # Set page configuration
 
@@ -71,33 +64,23 @@ def about_the_developer():
 
 def skills_take_away():
     st.header("Skills Take Away From This Project")
-    st.caption("Data Scraping")
+    st.caption("Data Fetching from PostgreSQL")
     st.caption("Data Cleaning")
+    st.caption("EDA")
     st.caption("Python")
     st.caption("Pandas")
-    st.caption("Machine Learning")
-    st.caption("Algoirthms in Machine Learning")
+    st.caption("Deep Learning")
     st.caption("Streamlit Application")
 
 def objective():
     st.header("Objective")
-    st.write("To Develop a streamlit application to predict the prices of the used cars using Machine Learning Algorithms")
+    st.write("To Develop a streamlit application to predict the prices movies using Deep Learning")
 
 def prerequisites():
     st.header("Prerequisites")
     st.write("1. Python Environment: Install Python on your system.")
-    st.write("2. Pandas, Scikit-learn, Matplotlib, Seaborn, Numpy, JSON")
+    st.write("2. Pandas, Scikit-learn, Matplotlib, Seaborn, Numpy, Tensorflow")
 
-def Approach():
-    st.header("Approach")
-    st.write("Structuring the Given Dataset")
-    st.write("Data Cleansing - Especially on Null values, duplicates and redundancy")
-    st.write("Exploratory Data Analysis - Skewness, Outliers handling, Correlation")
-    st.write("Getting the dataframe ready for machine learning usng encoders")
-    st.write("Choosing the best machine learning algorithms and hypertune if necessary")
-    st.write("Export the model as pickle")
-    st.write("Develop streamlit application to receive pickle parameters as input and display the predicted results")
-    
 def main():
     option = st.sidebar.radio("Navigation", ["Home", "App Page","About Developer"])
     if option == "Home":
@@ -119,177 +102,77 @@ def main():
         """)
     
     elif option == "App Page":
-        st.title("Car Dekho Price Prediction")
+        st.title("DVD Rental Deep Learning Project")
         
         
-        bt = st.selectbox("Body Type",["Select bodytype"]+['Hatchback' ,'SUV', 'Sedan', 'MUV',  'Minivans', 'Wagon'])
-        km =st.slider("Kilo Meter", min_value=700, max_value=150000)
-        trans = st.selectbox("Transmission",["Select Transmission"]+['Manual','Automatic'])
-        owners = st.selectbox("No of Owners",["Select no.of.owner"]+[0,1,2,3,4,5])
-        brand = st.selectbox("Brand",["Select Brand"]+['Maruti', 'Ford', 'Tata', 'Hyundai', 'Datsun', 'Honda' ,'Renault', 'Volkswagen',
-                                            'Mahindra', 'Skoda', 'MG', 'Kia', 'Toyota', 'Nissan' ,'Fiat', 'Chevrolet',
-                                                        'Citroen' ,'Mini', 'Hindustan Motors'])
-
-        model_year =st.slider("Model Year", min_value=1985, max_value=2023)
-        # insurance = st.selectbox("Insurance Validity",["Select Insurance Validity"]+['Third Party', 'Comprehensive', 'Zero Dep', 'Not Available'])
-        fueltype = st.selectbox("Fuel Type",["Select Fuel Type"]+['Petrol', 'Diesel', 'LPG', 'CNG'])
-        mileage = st.slider("Mileage", min_value=10.0, max_value=28.0)
-        engine =st.slider("Engine CC", min_value=700, max_value=2000)
-        seat = st.slider("No of Seats", min_value = 4, max_value = 8)
-        # color = st.selectbox("Color",["Select Color"]+['white', 'red', 'others', 'gray', 'maroon', 'orange', 'silver', 'blue', 'brown',
-        #                                                 'yellow', 'black', 'gold', 'green', 'purple'])
-        # gears = st.selectbox("Gear Box",["Select Gears"]+[5, 7, 4, 6, 0, 8])
-        steering_type = st.selectbox("Steering Type",["Select Steering type"]+['EPAS', 'Electronic', 'Manual', 'Power']) 
-        front_brake = st.selectbox("Front Brake",["Select Front Brake type"]+['Disc', 'others']) 
-        rear_brake = st.selectbox("Rear Brake",["Select Rear brake type"]+['Disc', 'Drum']) 
-        tyre_type = st.selectbox("Tyre Type",["Select Tyre type"]+['Radial', 'Tubeless']) 
-        door = st.slider("No of Doors", min_value=4, max_value=5)
-        city = st.selectbox("City",["Select City"]+['Bangalore', 'Chennai', 'Delhi', 'Hyderabad', 'Jaipur', 'Kolkata'])
+        rental_duration = st.selectbox("Rental Duration",["Select Rental Duration"]+[3,4,5,6,7])
+        rental_rate =st.slider("Rental_rate", min_value=0, max_value=10)
+        length = st.slider("Length of the movie", min_value = 45, max_value=185)
+        replacement_cost = st.selectbox("Replacement Cost",["Select Replacement Cost"]+[9.99, 10.99, 11.99, 12.99, 13.99, 14.99, 15.99, 16.99, 17.99, 18.99, 19.99, 20.99, 21.99, 22.99, 23.99, 24.99, 25.99, 26.99, 27.99, 28.99, 29.99])
+        rating = st.selectbox("Rating",["Select Rating"]+['PG-13','NC-17','PG','R','G'])
+        category = st.selectbox("Category",['Select Category']+['Horror', 'Documentary', 'New', 'Classics', 'Games', 'Sci-Fi',
+       'Foreign', 'Family', 'Travel', 'Music', 'Sports', 'Comedy',
+       'Drama', 'Action', 'Children', 'Animation'])
+        active = st.selectbox("Status",['Select Status']+['Active','Not Active'])
+        rental_month = st.selectbox("Rental_month",['Select Rental Month']+[6,7,8])
+        rental_day = st.slider("Rental Day", min_value = 1, max_value=31)
+        return_month = st.selectbox("Return_month",['Select Return Month']+[6,7,8])
+        return_day = st.slider("Return Day", min_value = 1, max_value=31)
+        
 
         details1 = []
         
         
-        if bt != "Select bodytype":
-            encoded_value = encoder["bt"].transform([bt])[0]
-            details1.append(int(encoded_value))
+        if rental_duration != "Rental Duration":
+            details1.append(float(rental_duration))
         else:
             st.warning("Please choose correct any option in body type box")
-        if km:
-            details1.append(km)
-
-        if trans != "Select Transmission":
-            encoded_value = encoder["transmission"].transform([trans])[0]
-            details1.append(int(encoded_value))
+        if rental_rate:
+            details1.append(float(rental_rate))
+        if length:
+            details1.append(float(length))    
+        if replacement_cost != "Select Replacement Cost":
+            details1.append(float(replacement_cost))
         else:
-            st.warning("Please choose correct any option in transmission box")
-        
-        if owners != "Select no.of.owner":
-            details1.append(owners)
+            st.warning("Please choose Rental Duration")
+        if rating != "Select Rating":
+            rating_array = ['PG-13','NC-17','PG','R','G']
+            num_rating = rating_array.index(rating)
         else:
-            st.warning("Please choose correct any option in owners box")
-            
-        
-        if brand != "Select Brand":
-            encoded_value = encoder["oem"].transform([brand])[0]
-            details1.append(int(encoded_value))
+            st.warning("Please choose Rating")
+
+        if category != "Select Category":
+            array = ['Horror', 'Documentary', 'New', 'Classics', 'Games', 'Sci-Fi',
+            'Foreign', 'Family', 'Travel', 'Music', 'Sports', 'Comedy',
+            'Drama', 'Action', 'Children', 'Animation']
+            num = array.index(category)
+            details1.append(float(num))
         else:
-            st.warning("Please choose correct any option in brand box")
-
-        if model_year:
-            details1.append(float(model_year))
-      
-        # if insurance != "Select Insurance Validity":
-        #     encoded_value = encoder["Insurance Validity"].transform([insurance])[0]
-        #     details1.append(int(encoded_value))
-        # else:
-        #     st.warning("Please choose correct any option in insurance box")
-
-        if fueltype != "Select Fuel Type":
-            encoded_value = encoder["Fuel Type"].transform([fueltype])[0]
-            details1.append(int(encoded_value))
+            st.warning("Please Select Category")           
+        if active != 'Select Status':
+            status = ['Active','Not Active']
+            num_stat = status.index[active]
+            details1.append(int(num_stat))
         else:
-            st.warning("Please choose correct any option in fueltype")
-        
-        if mileage:
-            details1.append(mileage)
+            st.warning("Please Select Status")
+        if rental_month:
+            details1.append(int(rental_month))
+        if rental_day:
+            details1.append(int(rental_day))
+        if return_month:
+            details1.append(int(return_month))
+        if return_day:
+            details1.append(int(return_day))
 
-        if engine:
-            details1.append(engine)
+        # details = [details1]
 
-        # Add mean values
-        max_power_mean = 83.284
-        details1.append(max_power_mean)
-
-        torque_mean = 127.384
-        details1.append(torque_mean)
-
-        # if color != "Select Color":
-        #     encoded_value = encoder["Color"].transform([color])[0]
-        #     details1.append(int(encoded_value))
-        # else:
-        #     st.warning("Please choose correct any option in color box")
-
-        if seat:
-            details1.append(seat)
-        
-        cylinder_mean = 4
-        details1.append(cylinder_mean)
-
-        valuespercylinder_mean = 4
-        details1.append(valuespercylinder_mean)
-        
-        Length_mean = 3880.395
-        details1.append(Length_mean)
-
-        Width_mean = 1690.101
-        details1.append(Width_mean)
-
-        Height_mean = 1542.333
-        details1.append(Height_mean)
-
-        wheelbase_mean = 2465.064
-        details1.append(wheelbase_mean)
-
-        if door:
-            details1.append(door)
-
-
-
-        if steering_type != "Select Steering type":
-            # city = city.lower()
-            encoded_value = encoder["Steering Type"].transform([steering_type])[0]
-            details1.append(int(encoded_value))
-            print(encoded_value)
-        else:
-            st.warning("Please choose correct any option in city box")
-
-        if front_brake != "Select Front Brake type":
-            # city = city.lower()
-            encoded_value = encoder["Front Brake Type"].transform([front_brake])[0]
-            details1.append(int(encoded_value))
-            print(encoded_value)
-        else:
-            st.warning("Please choose correct any option in city box")
-
-        if rear_brake != "Select Rear Brake type":
-            # city = city.lower()
-            encoded_value = encoder["Rear Brake Type"].transform([rear_brake])[0]
-            details1.append(int(encoded_value))
-            print(encoded_value)
-        else:
-            st.warning("Please choose correct any option in city box")
-
-        if tyre_type != "Select Tyre type":
-            # city = city.lower()
-            encoded_value = encoder["Tyre Type"].transform([tyre_type])[0]
-            details1.append(int(encoded_value))
-            print(encoded_value)
-        else:
-            st.warning("Please choose correct any option in city box")
-        
-
-        # if gears != "Select Gears":
-        #     details1.append(gears)
-        # else:
-        #     st.warning("Please choose correct any option in gears box")
-        if city != "Select City":
-            # city = city.lower()
-            encoded_value = encoder["City"].transform([city])[0]
-            details1.append(int(encoded_value))
-            print(encoded_value)
-        else:
-            st.warning("Please choose correct any option in city box")
-        # Convert to DataFrame and scale
-        details = [details1]
-        if len(details1) == 24:
-            values_scaled = scaler.transform(details)
         
         #st.write(f"Scaled Input Data: {values_scaled}")
     
 
         if st.button("Estimate Price"):
-            car_price_pred = model.predict(values_scaled)
-            st.success(f"Estimated Price: ₹{round(car_price_pred[0][0], 2)}")
+            dvd_amount = model.predict(details1)
+            st.success(f"Estimated Price: {round(dvd_amount, 2)}")
     
     else:
         col1, col2 = st.columns(2)
@@ -297,7 +180,7 @@ def main():
         with col1:
             st.header("About")
             options = ["About the Developer", "Skills take away From This Project", "Objective", 
-                    "Prerequisites", "Required Python Libraries", "Approach"]
+                    "Prerequisites", "Required Python Libraries"]
             choice = st.radio("Go to", options)
 
         with col2:
@@ -311,8 +194,6 @@ def main():
                 prerequisites()
             elif choice == "Required Python Libraries":
                 required_python_libraries()
-            elif choice == "Approach":
-                Approach()
 
 
 if __name__ == "__main__":
