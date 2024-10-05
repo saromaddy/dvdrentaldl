@@ -138,6 +138,7 @@ def main():
         if rating != "Select Rating":
             rating_array = ['PG-13','NC-17','PG','R','G']
             num_rating = rating_array.index(rating)
+            details1.append(float(num_rating))
         else:
             st.warning("Please choose Rating")
 
@@ -151,18 +152,18 @@ def main():
             st.warning("Please Select Category")           
         if active != 'Select Status':
             status = ['Active','Not Active']
-            num_stat = status.index[active]
-            details1.append(int(num_stat))
+            num_stat = status.index(active)
+            details1.append(float(num_stat))
         else:
             st.warning("Please Select Status")
         if rental_month:
-            details1.append(int(rental_month))
+            details1.append(float(rental_month))
         if rental_day:
-            details1.append(int(rental_day))
+            details1.append(float(rental_day))
         if return_month:
-            details1.append(int(return_month))
+            details1.append(float(return_month))
         if return_day:
-            details1.append(int(return_day))
+            details1.append(float(return_day))
 
         # details = [details1]
 
@@ -171,8 +172,11 @@ def main():
     
 
         if st.button("Estimate Price"):
-            dvd_amount = model.predict(details1)
-            st.success(f"Estimated Price: {round(dvd_amount, 2)}")
+            if rental_month <=return_month and rental_day <=return_day:
+                dvd_amount = model.predict(np.array([details1]))
+                st.success(f"Estimated Price: {round(dvd_amount[0][0], 2)}")
+            else:
+                st.warning("Please enter valid month and date")
     
     else:
         col1, col2 = st.columns(2)
