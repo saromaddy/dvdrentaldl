@@ -31,8 +31,8 @@ page_bg_img = f"""
 </style>
 """
 st.set_page_config(
-    page_title="Car Price Prediction",
-    page_icon='imgs/carlogo.png'
+    page_title="DVD Rental Deep Learning",
+    page_icon='imgs/dl.png'
 )
 
 # Inject CSS with markdown
@@ -47,7 +47,8 @@ model = load_model('DL_Algo.h5')
 st.markdown("""
 <style>
 h1 {
-    color: red; /* Change to your desired color */
+    color:	#black; /* Change to your desired color */
+    font-size: 34px;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -64,17 +65,17 @@ def about_the_developer():
 
 def skills_take_away():
     st.header("Skills Take Away From This Project")
-    st.caption("Data Fetching from PostgreSQL")
-    st.caption("Data Cleaning")
-    st.caption("EDA")
-    st.caption("Python")
-    st.caption("Pandas")
-    st.caption("Deep Learning")
-    st.caption("Streamlit Application")
+    st.caption("Data Cleaning and Preprocessing")
+    st.caption("Feature Engineering for Neural Networks")
+    st.caption("Building and Training Artificial Neural Networks")
+    st.caption("Model Evaluation and Optimization")
+    st.caption("Postgre SQL")
+    st.caption("Deploying Deep learning models using AWS and Streamlit")
+    st.caption("Documentation and Reporting")
 
 def objective():
     st.header("Objective")
-    st.write("To Develop a streamlit application to predict the prices movies using Deep Learning")
+    st.write("To Develop a streamlit application to predict the prices movies from DVD rental sample database using Deep Learning")
 
 def prerequisites():
     st.header("Prerequisites")
@@ -84,21 +85,18 @@ def prerequisites():
 def main():
     option = st.sidebar.radio("Navigation", ["Home", "App Page","About Developer"])
     if option == "Home":
-        st.title("About Car Dekho")
+        st.title("DVD Rental - Postgre SQL - Deep Learning")
         st.write("""
-        CarDekho.com is India's leading car search venture that helps users buy cars that are right for them. 
-        Its website and app carry rich automotive content such as expert reviews, detailed specs and prices, 
-        comparisons as well as videos and pictures of all car brands and models available in India. 
-        The company has tie-ups with many auto manufacturers, more than 4000 car dealers, and numerous financial institutions to 
-        facilitate the purchase of vehicles.
-        """)
-        # st.image(r"C:\Users\shank\Desktop\car_dheko\CarDekho-FY22-social.jpg")
-        st.write("""
-        CarDekho.com has launched many innovative features to ensure that users get an immersive experience of the car 
-                 model before visiting a dealer showroom. These include a Feel The Car tool that gives 360-degree interior/exterior 
-                 views with sounds of the car and explanations of features with videos; search and comparison by make, model, price, 
-                 features; and live offers and promotions in all cities. The platform also has used car classifieds wherein users can 
-                 upload their cars for sale, and find used cars for buying from individuals and used car dealers.
+        The DVD Rental sample dataset is a PostgreSQL database designed for learning and practicing SQL queries and database management concepts.
+        It contains information related to a fictional DVD rental store, with tables representing customers, films, rentals, staff, and inventory.
+
+        The database includes 16 tables that model the store's business operations, such as rental transactions, payments, and film categories. 
+        Each table is interconnected through foreign keys, facilitating complex queries like joining customer information with rental history or inventory details. 
+        
+        This dataset is ideal for practicing database normalization, indexing, and SQL query optimization. 
+        It’s commonly used in educational contexts to demonstrate relational database principles.
+
+        By using this sample dataset, this project attempts to predict the amount of rental using Deep Learning
         """)
     
     elif option == "App Page":
@@ -184,7 +182,7 @@ def main():
         with col1:
             st.header("About")
             options = ["About the Developer", "Skills take away From This Project", "Objective", 
-                    "Prerequisites", "Required Python Libraries"]
+                    "Prerequisites"]
             choice = st.radio("Go to", options)
 
         with col2:
@@ -196,8 +194,7 @@ def main():
                 objective()
             elif choice == "Prerequisites":
                 prerequisites()
-            elif choice == "Required Python Libraries":
-                required_python_libraries()
+         
 
 
 if __name__ == "__main__":
